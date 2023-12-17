@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ruiduarte.rrd <ruiduarte.rrd@student.42    +#+  +:+       +#+        */
+/*   By: ruirodri < ruirodri@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 21:35:52 by ruirodri          #+#    #+#             */
-/*   Updated: 2023/12/06 14:07:58 by ruiduarte.r      ###   ########.fr       */
+/*   Updated: 2023/12/17 13:26:30 by ruirodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,7 @@
 # include <fcntl.h>
 
 char	*get_next_line(int fd);
-char	*ft_strdup(const char *s);
-char	*ft_strchr(const char *s, int c);
-char	*ft_strjoin(char const *s1, char const *s2);
-char	*ft_get_line(char **remainder);
-int		ft_read_from_file(int fd, char **remainder);
+char	*ft_strjoin(char *s1, char *s2);
+size_t	ft_strlen(char *str);
+int		ft_clean(char *str);
 #endif

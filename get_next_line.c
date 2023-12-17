@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ruiduarte.rrd <ruiduarte.rrd@student.42    +#+  +:+       +#+        */
+/*   By: ruirodri < ruirodri@student.42lisboa.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 18:51:55 by ruirodri          #+#    #+#             */
-/*   Updated: 2023/12/06 14:16:11 by ruiduarte.r      ###   ########.fr       */
+/*   Updated: 2023/12/17 13:16:00 by ruirodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,32 @@
 
 char	*get_next_line(int fd)
 {
-	static char	*remainder;
-	int			bytes_read;
+	static char	buffer[BUFFER_SIZE];
+	char		*next_line;
+	int			bytes;
 
-	if (!remainder)
-		remainder = ft_strdup("");
-	while (!(ft_strchr(remainder, '\n')))
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	next_line = ft_strjoin(0, buffer);
+	if (ft_clean(buffer) > 0)
+		return (next_line);
+	bytes = read(fd, buffer, BUFFER_SIZE);
+	if (bytes < 0 || (bytes == 0 && (*next_line == '\0')))
 	{
-		bytes_read = ft_read_from_file(fd, &remainder);
-		if (bytes_read <= 0)
-			break ;
+		free(next_line);
+		return (NULL);
 	}
-	return (ft_get_line(&remainder));
+	while (bytes > 0)
+	{
+		next_line = ft_strjoin(next_line, buffer);
+		if (ft_clean(buffer) > 0)
+			break ;
+		bytes = read(fd, buffer, BUFFER_SIZE);
+	}
+	return (next_line);
 }
 
-int	main(void)
+/* int	main(void)
 {
 	int fd = open("file.txt", O_RDONLY);
 	if (fd == -1)
@@ -45,4 +56,4 @@ int	main(void)
 	}
 	close(fd);
 	return (0);
-}
+} */
